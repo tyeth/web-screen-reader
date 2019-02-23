@@ -10,6 +10,7 @@ export class SelectSpeaker extends AbstractSpeaker {
         let inputText = this.inputSpeaker.getText(node, config);
         
         let optionsText = '';
+        let selectedOption='';
         let children = node.children;
 
         for (let i = 0; i < children.length; i++) {
@@ -17,7 +18,7 @@ export class SelectSpeaker extends AbstractSpeaker {
             if (child instanceof HTMLOptionElement) {
                 let optionText = this.textSpeaker.getText(<HTMLElement>child, config);
                 if ((<HTMLOptionElement>child).selected) {
-                    optionText += " (currently selected)";
+                    selectedOption = `[The currently selected option is ${optionText}..]`;
                 }
                 if (optionText) {
                     optionsText += `${optionText}..`;
@@ -25,7 +26,7 @@ export class SelectSpeaker extends AbstractSpeaker {
             }
         }
 
-        optionsText = optionsText ? `Options are: ${optionsText}` : `There are no options`;
+        optionsText = optionsText ? `Options are: ${optionsText}` + selectedOption: `There are no options`;
 
         return `Select.. ` + inputText + optionsText;
     }
